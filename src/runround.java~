@@ -1,0 +1,69 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: runround
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+
+class runround {
+    private static String count = "";
+    
+    public static boolean is_unique (int num) {
+        if (("" + num).contains("0")) {
+            return false;
+        }
+        String n = "" + num;
+        for (int i = 0; i < n.length(); i++) {
+            int count = n.length() - n.replace("" + n.charAt(i), "").length();
+            if (count > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static String wrap (String num) {
+        int first = Integer.parseInt(num.charAt(0) + "");
+        while (num.length() < first + 1) {
+            num += num;
+        }
+        return num.substring(1, first + 1);
+    }
+    
+    public static boolean is_runaround (String num) {
+        String starter = num + num + num;
+        for (int i = 0; i < num.length(); i++) {
+            int start = starter.indexOf(num.charAt(i) + "");
+            if (!count.contains("" + (Integer.parseInt("" + starter.charAt(start)) + Integer.parseInt("" + starter.charAt(start + Integer.parseInt("" + num.charAt(i))))))) {
+                break;
+            }
+            count += (Integer.parseInt("" + starter.charAt(start)) + Integer.parseInt("" + starter.charAt(start + Integer.parseInt("" + num.charAt(i)))));
+        }
+
+        return count.length() == num.length();
+    }
+    
+    public static void main (String [] args) throws IOException {
+        
+        Scanner scan = new Scanner(new File("runround.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("runround.out")));
+        int num = scan.nextInt();
+        num++;
+
+        while (!is_runaround("" + num)) {
+            while (!is_unique(num)) {
+                num++;
+            }
+            num++;
+        }
+        out.close();
+    }
+}
+
+

@@ -1,0 +1,14 @@
+import java.io.*;
+import java.util.*;
+
+class combos {
+    public static void main (String [] args) {
+        String foods = "ABC";
+        String drinks = "DE";
+        for (int food_char = 0; food_char < foods.length(); food_char++) {
+            for (int drink_char = 0; drink_char < drinks.length(); drink_char++) {
+                System.out.println(foods.charAt(food_char) + drinks.charAt(drink_char));
+            }
+        }
+    }
+}

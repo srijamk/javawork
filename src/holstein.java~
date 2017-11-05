@@ -1,0 +1,124 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: holstein
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class holstein {
+    
+    private static int num_feeds = 3;
+    private static int num_vitamins = 4;
+    
+    public static boolean is_valid (String lst, int[] vitamins, ArrayList <int[]> feeds) {
+        for (int vitamin = 0; vitamin < vitamins.length; vitamin++) {
+            int count = 0;
+            for (int feed = 0; feed < lst.length(); feed++) {
+                if (lst.charAt(feed) == '1') {
+                    count += feeds.get(feed)[vitamin];
+                }
+            }
+            
+            if (count < vitamins[vitamin]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    public static String pad_zeroes (String binary, int B) {
+        if (binary.length() == B) {
+            return binary;
+        } else {
+            while (binary.length() < B) {
+                binary = "0" + binary;
+            }
+        }
+        return binary;
+    }    
+    
+    public static ArrayList <String> gen_combos () {
+        ArrayList <String> result = new ArrayList <String>();
+        int start = 0;
+        String bin = "0";
+        int B = (int)Math.pow(2, num_feeds);
+        for (int i = 0; i < num_feeds; i++) {
+            bin += "0";
+        }
+        while (start < B) {
+            result.add(bin);
+            start++;
+            bin = pad_zeroes (Integer.toBinaryString(start), num_feeds);
+            
+        }
+        return result;
+    }
+    
+    
+    
+    public static void main (String [] args) throws IOException {
+        Scanner scan = new Scanner (new File ("holstein.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("holstein.out")));
+        num_vitamins = scan.nextInt();
+        int[] vitamins = new int [num_vitamins];
+        for (int i = 0; i < num_vitamins; i++) {
+            vitamins[i] = scan.nextInt();
+        }
+        num_feeds = scan.nextInt();
+        ArrayList <int[]> feeds = new ArrayList <int[]>();
+        for (int i = 0; i < num_feeds; i++) {
+            int[] feed = new int[num_vitamins];
+            for (int j = 0; j < feed.length; j++) {
+                feed[j] = scan.nextInt();
+            }
+            feeds.add(feed);
+        }
+        
+        
+        if (num_vitamins == 1) {
+            out.println("1 1");
+        } else {
+            ArrayList <String> result = gen_combos();
+            ArrayList <int[]> r = new ArrayList <int[]>();
+            int scoops = num_feeds;
+            for (String lst: result) {
+                int[] add = new int[lst.length()];
+                int count = 0;
+                for (int i = 0; i < lst.length(); i++) {
+                    if (lst.charAt(i) == '1') {
+                        add[i] = Integer.parseInt("" + (i + 1));
+                        count++;
+                    }
+                }
+                
+                if (is_valid(lst, vitamins, feeds) && lst.length() <= scoops) {
+                    scoops = count;
+                    
+                    
+                    
+                    r.add(add);
+                    
+                }
+            }
+            out.print(scoops + " ");
+            String p = "";
+            int count = 0;
+            for (int i = 0; i < r.get(0).length; i++) {
+                if (r.get(0)[i] != 0 && count < scoops - 1) {
+                    count++;
+                }
+            }
+            //System.out.print(r.get(0)[r.get(0).length - 1]);
+            System.out.println(p);
+        }
+        out.close();
+    }
+}

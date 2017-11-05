@@ -1,0 +1,12 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: pprime
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;

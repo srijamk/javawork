@@ -1,0 +1,5 @@
+class BackBinary {
+    public static void binary (int n) {
+        
+    }
+}

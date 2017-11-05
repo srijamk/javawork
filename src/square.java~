@@ -1,0 +1,12 @@
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+
+class square {
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("FILL HERE.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("FILL HERE.out")));  
+        out.println();
+        out.close();
+    }
+}

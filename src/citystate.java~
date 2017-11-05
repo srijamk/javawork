@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+
+class citystate {
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("citystate.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("citystate.out")));
+        int N = Integer.parseInt(f.readLine());
+        ArrayList <String> states = new ArrayList <String>();
+        ArrayList <String> cities = new ArrayList <String>();
+        for (int i = 0; i < N; i++) {
+            String [] line = f.readLine().split(" ");
+            states.add(line[0]);
+            cities.add(line[1]);
+        }
+        for (String state: states) {
+            state = state.substring(0, 2);
+        }
+        int count = 0;
+        for (String state: states) {
+            if (cities.contains(state)) {
+                count++;
+            }
+        }
+        System.out.println(count);
+        out.close();
+    }
+}

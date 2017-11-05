@@ -1,0 +1,12 @@
+import java.io.*;
+import java.util.*;
+
+class BackStrings {
+    public static void backStrings (int num, int k) {
+        
+    }
+    
+    public static void main (String [] args) {
+        
+    }
+}

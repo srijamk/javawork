@@ -1,0 +1,21 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: zerosum
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+
+class zerosum {
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("zerosum.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("zerosum.out")));
+
+        out.close();
+        
+    }
+}

@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+import java.util.Collections;
+
+class hps {
+    public static String top_pop (ArrayList <String> list) {
+        int h = 0;
+        int c = 0;
+        int p = 0;
+        for (int i = 0; i < list.size() / 2; i++) {
+            if (list.get(i).equals("H")) {
+                h++;
+            }
+            if (list.get(i).equals("C")) {
+                c++;
+            }
+            if (list.get(i).equals("P")) {
+                p++;
+            }
+        }
+        if (h >= c && h >= p) {
+            return "H";
+        } else if (c >= h && c >= p) {
+            return "C";
+        } else {
+            return "P";
+        }
+    }
+    
+    public static int trial (ArrayList <String> list, String top, String bottom) {
+        int max = 0;
+        for (int i = 0; i < list.size(); i++) {
+            int score = 0;
+            for (int j = 0; j <= i; j++) {
+                if (top.equals(list.get(j))) {
+                    score++;
+                }
+            }
+            for (int k = i + 1; k < list.size(); k++) {
+                if (bottom.equals(list.get(k))) {
+                    score++;
+                }
+            }
+            if (score > max) {
+                max = score;
+            }
+        }
+        return max;
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("hps.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("hps.out")));  
+        int games = Integer.parseInt(f.readLine());
+        ArrayList <String> list = new ArrayList <String> ();
+        for (int i = 0; i < games; i++) {
+            list.add(f.readLine());
+        }
+        int max = 0;
+        out.println(Math.max(Math.max(Math.max(Math.max(Math.max(Math.max((Math.max(Math.max(trial(list, "P", "P"), trial(list, "P", "S")), trial(list, "P", "H"))), trial(list, "S", "P")), trial(list, "S", "S")), trial(list, "S", "H")), trial(list, "H", "P")), trial(list, "H", "S")), trial(list, "H", "H")));
+        out.close();
+    }
+}

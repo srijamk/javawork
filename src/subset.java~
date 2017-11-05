@@ -1,0 +1,106 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: subset
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+
+class subset {
+    
+    private static ArrayList <ArrayList <ArrayList <Integer>>> pred = new ArrayList <ArrayList <ArrayList <Integer>>>();
+    
+    public static ArrayList <Integer> merge (ArrayList <Integer> first, ArrayList <Integer> sec) {
+        ArrayList <Integer> result = new ArrayList <Integer>();
+        for (int f: first) {
+            result.add(f);
+        }
+        for (int s: sec) {
+            result.add(s);
+        }
+        return result;
+    }
+    
+    public static boolean no_dup (ArrayList <Integer> s) {
+        for (int i = 0; i < s.size(); i++) {
+            if (Collections.frequency(s, s.get(i)) > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean is_unique (ArrayList <Integer> first, ArrayList <ArrayList <Integer>> start) {
+        for (ArrayList <Integer> s: start) {
+            if (s.equals(new ArrayList <Integer>(first))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static void print (ArrayList <Integer> s) {
+        for (int i: s) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+    public static void main (String [] args) throws IOException {
+        ArrayList <Integer> test = new ArrayList <Integer>();
+        test.add(1);
+        test.add(1);
+        
+        Scanner scan = new Scanner(new File("subset.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("subset.out")));
+        int num = scan.nextInt();
+        int count = 0;
+        int target = (num * (num + 1)) / 4;
+        ArrayList <ArrayList <Integer>> start = new ArrayList <ArrayList <Integer>>();
+        ArrayList <Integer> s = new ArrayList <Integer>();
+        s.add(1);
+        start.add(s);
+        pred.add(start);
+        for (int i = 1; i <= target + 1; i++) {
+            start = new ArrayList <ArrayList <Integer>>();
+            int n = i + 1;
+            ArrayList <Integer> begin = new ArrayList <Integer>();
+            begin.add(n);
+            start.add(begin);
+            pred.add(start);
+            
+            //print(begin);
+            
+            for (int j = i; j >= 1; j--) {
+                ArrayList <Integer> following = new ArrayList <Integer>();
+                following.add(j);
+                int leftover = n - j;
+                for (ArrayList <Integer> prev: pred.get(leftover - 1)) {
+                    ArrayList <Integer> actual = merge(following, prev);
+                    
+                    Collections.sort(actual);
+                    //print(actual);
+                    if (is_unique(actual, start) && no_dup(actual)) {
+                        start.add(actual);
+                        
+                        //print(actual);
+                    }
+                }
+            }
+            pred.add(start);
+            
+            
+        }
+        for (ArrayList <Integer> z: pred.get(3)) {
+            print(s);
+        }
+        
+        out.close();
+    }
+}
+
+

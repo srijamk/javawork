@@ -1,0 +1,15 @@
+import java.io.*;
+import java.util.*;
+
+class Euler2 {
+    public static void main (String [] args) {
+        int x = 1;
+        int y = 2;
+        for (int i = 0; i < 8) {
+            System.out.println(x);
+            x = x + y;
+            System.out.println(y);
+            y = x + y;
+        }
+    }
+}

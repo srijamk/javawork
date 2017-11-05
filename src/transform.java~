@@ -1,0 +1,84 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: transform
+*/
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+
+class transform {
+    public static ArrayList <String> swap_line (ArrayList <String> line) {
+        ArrayList <String> result = new ArrayList <String>();
+        for (int i = line.size() - 1; i >= 0; i--) {
+            result.add(line.get(i));
+        }
+        return result;
+    }
+    
+    public static boolean check_same (ArrayList <ArrayList <String>> pattern, ArrayList <ArrayList <String>> compare_pattern) {
+        for (int line = 0; line < pattern.size(); line++) {
+            for (int letter = 0; letter < pattern.get(0).size(); letter++) {
+                if (compare_pattern.get(line).get(letter) != pattern.get(line).get(letter)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static boolean one (ArrayList <ArrayList <String>> pattern, ArrayList <ArrayList <String>> compare_pattern) {
+        for (int i = 0; i < pattern.size(); i++) {
+            for (int j = 0; j < pattern.size(); j++) {
+                System.out.print(pattern.get(i).get(j));
+            }
+            System.out.println();
+        }
+        ArrayList <ArrayList <String>> new_pattern = new ArrayList <ArrayList <String>> ();
+        for (int last_char = 0; last_char <= pattern.size() - 1; last_char++) {
+            ArrayList <String> new_line = new ArrayList <String>();
+            for (int line = pattern.size() - 1; line >= 0; line--) {
+                new_line.add(pattern.get(line).get(last_char));
+                //System.out.print(pattern.get(line).get(last_char));
+            }
+            new_pattern.add(new_line);
+        }
+        return check_same(new_pattern, compare_pattern);
+    }
+    public static boolean two (ArrayList <ArrayList <String>> pattern, ArrayList <ArrayList <String>> compare_pattern) {
+        ArrayList <ArrayList <String>> new_pattern = new ArrayList <ArrayList <String>> ();
+        for (int line_pos = pattern.size() - 1; line_pos >= 0; line_pos--) {
+            new_pattern.add(swap_line(pattern.get(line_pos)));
+        }
+        return check_same(new_pattern, compare_pattern);
+    }
+    public static boolean six (ArrayList <ArrayList <String>> pattern, ArrayList <ArrayList <String>> compare_pattern) {
+        return check_same(pattern, compare_pattern);
+    }
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("transform.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("transform.out")));
+        ArrayList <ArrayList <String>> pattern = new ArrayList <ArrayList <String>> ();
+        ArrayList <ArrayList <String>> compare_pattern = new ArrayList <ArrayList <String>> ();
+        int num_of_lines = Integer.parseInt(f.readLine());
+        ArrayList <String> line = new ArrayList <String>();
+        for (int time = 1; time <= num_of_lines; time++) {
+            String read_line = f.readLine();
+            
+            for (int i = 0; i < num_of_lines; i++) {
+                line.add("" + read_line.charAt(i));
+                //System.out.println("" + read_line.charAt(i));
+            }
+            pattern.add(line);
+            System.out.println(read_line);
+        }
+        for (int time = 1; time <= num_of_lines; time++) {
+            String read_line = f.readLine();
+            for (int i = 0; i < num_of_lines; i++) {
+                line.add("" + read_line.charAt(i));
+            }
+            compare_pattern.add(line);
+        }
+        System.out.println(one(pattern, compare_pattern));
+        out.close();
+    }
+}

@@ -1,0 +1,26 @@
+import java.io.*;
+import java.util.*;
+import edu.princeton.cs.algs4.*;
+import java.util.Arrays;
+class IsAnagram {
+    public static void main (String [] args) {
+        char [] first = args[0].toCharArray();
+        char [] second = args[1].toCharArray();
+        Arrays.sort(first);
+        Arrays.sort(second);
+        boolean is_anagram = true;
+        if (first.length != second.length) {
+            StdOut.println(false);
+        } else {
+            for (int i = 0; i < first.length; i++) {
+                if (first[i] != second[i]) {
+                    is_anagram = false;
+                    break;
+                }
+            }
+            StdOut.println(is_anagram);
+        }
+        
+        
+    }
+}

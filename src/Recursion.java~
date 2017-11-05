@@ -1,0 +1,8 @@
+
+import java.lang.Math; // headers MUST be above the first class
+
+// one class needs to have a main() method
+public class Recursion {
+
+}
+

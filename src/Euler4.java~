@@ -1,0 +1,25 @@
+import java.io.*;
+import java.util.*;
+
+class Euler4 {
+    public static String reverse (String s) {
+        String result = "";
+        for (int i = s.length() - 1; i >= 0; i--) {
+            result += s.charAt(i);
+        }
+        return result;
+    }
+    
+    public static boolean isPalindrome (int n) {
+        String num = "" + n;
+        if (num.length() % 2 == 0) {
+            String first = num.substring(0, num.length() / 2);
+            String second = num.substring(num.length() / 2, num.length);
+            return 
+        }
+    }
+    
+    public static void main (String [] args) {
+        
+    }
+}

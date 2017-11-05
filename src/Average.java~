@@ -1,0 +1,9 @@
+import java.io.*;
+import java.util.*;
+import java.util.Arrays;
+// Imports package containing readInt, StdIn, and StdOut
+import edu.princeton.cs.algs4.*;
+
+class Average {
+    public static int average ()
+}

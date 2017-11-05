@@ -1,0 +1,41 @@
+import java.io.*;
+import java.util.*;
+import java.util.Arrays;
+import edu.princeton.cs.algs4.*;
+
+
+class BinarySearch {
+    public static int rank(int[] list, int number) {
+        int lo = 0;
+        int hi = list.length - 1;
+        while (hi > lo) {
+            int mid = (hi - lo) / 2;
+            if (list[mid] > number) {
+                lo = mid + 1;
+            } else if (list[mid] < number) {
+                hi = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+    public static void main (String [] args) {
+        In in = new In(args[0]);
+        int [] arr = in.readAllInts();
+        Arrays.sort(arr);
+        
+        while (!StdIn.isEmpty()) {
+            int key = StdIn.readInt();
+            if (BinarySearch.indexOf(arr, key) == -1) {
+                StdOut.println(key);
+            }
+        }
+        /*
+        for (int i = 0; i < 10; i++) {
+            arr[i] = i + 1;
+        }
+        System.out.println(rank(arr, 11));
+        */
+    }
+}

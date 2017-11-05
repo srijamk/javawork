@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+class barn1 {
+    
+    public static ArrayList <Integer> cut (ArrayList <Integer> stalls, int first, int last) {
+        ArrayList <Integer> result = new ArrayList <Integer> ();
+        for (int i = first; i <= last; i++) {
+            result.add(stalls.get(i));
+        }
+        return result;
+    }
+    
+    public static int find_gap (ArrayList <Integer> stalls) {
+        int largest = 0;
+        int index = 0;
+        for (int i = 0; i < stalls.size() - 1; i++) {
+            if (stalls.get(i + 1) - stalls.get(i) > largest) {
+                largest = stalls.get(i + 1) - stalls.get(i);
+                index = i;
+            }
+        }
+        return index;
+    }
+    
+    public static ArrayList <Integer> sort (ArrayList <Integer> list) {
+        Collections.sort(list);
+        //Collections.reverse(list);
+        return list;
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("barn1.in"));
+        BufferedWriter out = new BufferedWriter(new PrintWriter(new FileWriter("barn.out")));
+        String [] list = f.readLine().split(" ");
+        ArrayList <Integer> gaps = new ArrayList <Integer>();
+        ArrayList <Integer> stalls = new ArrayList <Integer>();
+        int boards = Integer.parseInt(list[0]);
+        int N = Integer.parseInt(list[2]);
+        for (int i = 0; i < N; i++) {
+            stalls.add(Integer.parseInt(f.readLine()));
+        }
+        int result = 0;
+        if (boards == 1) {
+            int min = sort(stalls).get(0);
+            Collections.reverse(sort(stalls));
+            int max = stalls.get(0);
+            result += max - min + 1;
+        } else if (boards == 2) {
+            result += stalls.get(find_gap(stalls)) - stalls.get(0) + 1;
+            result += stalls.get(stalls.size() - 1) - stalls.get(find_gap(stalls)) + 1;
+        } else if (boards == 3) {
+            result += stalls.get(stalls.size() - 1) - stalls.get(find_gap(stalls) + 1) + 1;
+            //System.out.println(find_gap(stalls));
+            stalls = cut(stalls, 0, find_gap(stalls));
+                      
+            result += stalls.get(find_gap(stalls)) - stalls.get(0) + 1;
+            //System.out.println(stalls.get(find_gap(stalls)) - stalls.get(0) + 1);
+            result += stalls.get(stalls.size() - 1) - stalls.get(find_gap(stalls) + 1) + 1;
+            System.out.println(stalls.get(stalls.size() - 1));
+        }
+        System.out.println(result);
+    }
+}

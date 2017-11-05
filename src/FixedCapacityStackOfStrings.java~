@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+import edu.princeton.cs.algs4.*;
+
+class FixedCapacityStackOfStrings {
+    private String [] arr;
+    private int count = 0;
+    public FixedCapacityStackOfStrings (int size) {
+        arr = new String [size];
+    }
+    public void push (String s) {
+        arr[count++] = s;
+    }
+    public String pop () {
+        String cur = peek();
+        arr[--count] = null;
+        return cur;
+    }
+    public boolean isEmpty () {
+        return count == 0;
+    }
+    public int size () {
+        return count;
+    }
+    public String peek () {
+        return arr[count - 1];
+    }
+    public static void main (String [] args) {
+        FixedCapacityStackOfStrings stack = new FixedCapacityStackOfStrings (100);
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            //StdOut.println(item);
+            if (!item.equals("-")) {
+                stack.push(item);
+            }
+            else if (!stack.isEmpty()) {
+                StdOut.print(stack.pop() + " ");
+            }
+            
+        }
+        StdOut.println(stack.size() + " items left");
+    }
+}

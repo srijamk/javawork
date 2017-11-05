@@ -1,0 +1,14 @@
+import java.io.*;
+import java.util.*;
+
+class Euler587 {
+    public static void main (String [] args) {
+        int rectangle_area = 2n * 4n;
+        int circles_area = n * pi;
+        int difference = 8n^2 - npi;
+        int half_of_the_weird_hourglass_shape_thing = difference / 4;
+        int small_rectangle_area = 1
+        int concave_area_la = 1 - half_of_the_weird_hourglass_shape_thing
+            
+    }
+}

@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+class Delete {
+    
+    public static String format (String current_date, String file_date) {
+        
+        int month_diff = Integer.parseInt(current_date.substring(0, 2)) - Integer.parseInt(file_date.substring(0, 2));
+        int day_diff = Integer.parseInt(current_date.substring(3, 5)) - Integer.parseInt(file_date.substring(3, 5));
+        int year_diff = Integer.parseInt(current_date.substring(6, 8)) - Integer.parseInt(file_date.substring(6, 8));
+        int hour_diff = Integer.parseInt(current_date.substring(9, 11)) - Integer.parseInt(file_date.substring(9, 11));
+        int minute_diff = Integer.parseInt(current_date.substring(12, 14)) - Integer.parseInt(file_date.substring(12, 14));
+        int second_diff = Integer.parseInt(current_date.substring(15, 17)) - Integer.parseInt(file_date.substring(15, 17));
+        
+        String difference = "Difference: " + month_diff + " months, " + day_diff + " days, " + year_diff + " years, " + 
+            hour_diff + " hours, " + minute_diff + " minutes, and " + second_diff + " seconds."; 
+        return difference;
+        
+    }
+    
+    
+    public static void main (String [] args) {
+        File file = new File("/Users/Kiran/BitTorrent Sync/Srija_Work/algs/src/delete.rtf");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
+        Date dateobj = new Date();
+        LocalDate today = LocalDate.now();
+        System.out.println(today);
+    }
+}

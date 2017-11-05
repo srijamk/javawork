@@ -1,0 +1,13 @@
+import java.io.*;
+import java.util.*;
+
+class Factorial {
+    public static int Fact (int n) {
+        if (n == 1) {
+            return 1;
+        }
+    }
+    public static void main (String [] args) {
+        System.out.println(Fact(2));
+    }
+}

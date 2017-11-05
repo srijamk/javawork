@@ -1,0 +1,34 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: wormhole
+*/
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+class wormhole {
+    public static int factorial(int n) {
+        int fact = 1; // this  will be the result
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("wormhole.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("wormhole.out")));
+        int N = Integer.parseInt(f.readLine());
+        ArrayList <String> y_list = new ArrayList <String>();
+        int count = 0;
+        for (int i = 0; i < N; i++) {
+            String [] split_list = f.readLine().split(" ");
+            if (y_list.contains(split_list[1])) {
+                count++;
+            } else {
+                y_list.add(split_list[1]);
+            }
+        }
+        out.println(count);
+        out.close();
+    }
+}

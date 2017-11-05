@@ -1,0 +1,39 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: hamming
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+
+class hamming {
+      
+    public static String toBinary (int num) {
+        if (num == 0 || num == 1) {
+            return "" + num;
+        }
+        if (num / 2 > 0) {
+            return "1" + toBinary(num / 2);
+        } else {
+            return "0" + toBinary(num / 2);
+        }
+        
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("hamming.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("hamming.out")));
+        String[] input_list = f.readLine().split(" ");
+        int N = Integer.parseInt(input_list[0]);
+        int B = Integer.parseInt(input_list[1]);
+        int D = Integer.parseInt(input_list[2]);
+        int start = 0;
+        System.out.println(toBinary(3));
+        out.close();
+    }
+}

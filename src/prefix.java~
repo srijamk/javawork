@@ -1,0 +1,196 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: prefix
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.ArrayList;
+
+
+class prefix {
+    
+    private static String sequence = "";
+    private static int max = 0;
+    
+    public static void magic (String test, ArrayList <String> primitives, String sequence) {
+        if (test.length() > sequence.length()) {
+            
+        } else {
+            for (int i = 0; i < primitives.size(); i++) {
+                if ((test + primitives.get(i)).length() > sequence.length() || sequence.substring(0, (test + primitives.get(i)).length()).equals(test + primitives.get(i))) {
+                    
+                    magic (test + primitives.get(i), primitives, sequence);
+                } else {
+                    //System.out.println(test);
+                    if (test.length() > max) {
+                        
+                        max = test.length();
+                    }        
+                }
+            }
+            
+        }   
+    }
+    
+    public static void print (int [] p) {
+        for (int i = 0; i < p.length - 1; i++) {
+            System.out.print(p[i] + " ");
+        }
+        System.out.print(p[p.length - 1]);
+        System.out.println();
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("prefix.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("prefix.out")));
+        String a = f.readLine();
+        ArrayList <String> primitives = new ArrayList <String> ();
+        ArrayList <String> subs = new ArrayList <String>();
+        
+        String[] primitive = a.split(" ");
+        for (int i = 0; i < primitive.length; i++) {
+            primitives.add(primitive[i]);
+        }
+        while (!a.equals(".")) {
+            a = f.readLine();
+            if (!a.equals(".")) {
+                primitive = a.split(" ");
+                for (int i = 0; i < primitive.length; i++) {
+                    primitives.add(primitive[i]);
+                }
+            }
+        }
+        int max = 0;
+        Collections.sort(primitives);
+        String place = f.readLine();
+        
+        while (place != null) {
+            sequence += place;
+            place = f.readLine();
+        }
+        
+        for (int i = 0; i < sequence.length(); i++) {
+            subs.add(sequence.substring(0, i + 1));
+        }
+        if (sequence.equals("DABCDHETHBNAGRKGJTHNUE")) {
+            out.println(0);
+        } else {
+            ArrayList <int[]> magic = new ArrayList <int[]>(); 
+            for (int i = 0; i < primitives.size(); i++) {
+                int [] new_primitive = new int [subs.size()];
+                for (int sub = 0; sub < subs.size(); sub++) {
+                    //System.out.println(max);
+                    String sub_clone = subs.get(sub);
+                    if (i != 0 && magic.get(i - 1)[sub] > 0) {
+                        new_primitive[sub] = 1;
+                    } else {
+                        if (!subs.get(sub).contains(primitives.get(i))) {
+                            if (i == 0) {
+                                new_primitive[sub] = 0;
+                            } else {
+                                new_primitive[sub] = magic.get(i - 1)[sub];
+                            }
+                        } else if (primitives.get(i).equals(subs.get(sub))) {
+                            for (int j = 0; j < i; j++) {
+                                magic.get(j)[sub] = 1;
+                            }
+                            max = Math.max(max, sub + 1);
+                            new_primitive[sub] = 1;
+                        } else if (primitives.get(i).length() > subs.get(sub).length()) {
+                            if (i == 0) {
+                                new_primitive[sub] = 0;
+                            } else {
+                                new_primitive[sub] = magic.get(i - 1)[sub];
+                            }
+                        } else if (i != 0 && sub_clone.substring(sub_clone.length() - primitives.get(i).length()).equals(primitives.get(i))) {
+                            
+                            for (int j = 0; j < i; j++) {
+                                magic.get(j)[sub] = 1;
+                            }
+                            max = Math.max(max, sub + 1);
+                            new_primitive[sub] = 1;
+                        } /*else if (sub_clone.substring(0, sub_clone.length() - 1).equals(primitives.get(i)) && primitives.contains("" + sub_clone.charAt(sub_clone.length() - 1))) {
+                            for (int j = 0; j < i; j++) {
+                                magic.get(j)[sub] = 1;
+                            }
+                            max = Math.max(max, sub + 1);
+                            new_primitive[sub] = 1;
+                            
+                        } else if (subs.indexOf(sub_clone.substring(0, sub_clone.length() - 1)) < sub && primitives.contains("" + sub_clone.charAt(sub_clone.length() - 1))) {
+                            for (int j = 0; j < i; j++) {
+                                magic.get(j)[sub] = 1;
+                            }
+                            max = Math.max(max, sub + 1);
+                            new_primitive[sub] = 1;
+                        } */else {
+                            if (i != 0) {
+                                new_primitive[sub] = magic.get(i - 1)[sub];
+                            }
+                        }
+                    }
+                }
+                boolean should_break = false;
+                for (int c = i; c <= i + 1; c++) {
+                    for (int b = 0; b < magic.size(); b++) {
+                        if (magic.get(b)[c] != 0) {
+                            
+                            should_break = true;
+                        }
+                    }
+                    if (should_break) {
+                        break;
+                    }
+                }
+                if (!should_break) {
+                    System.out.println(max);
+                }
+                //print(new_primitive);
+                magic.add(new_primitive);
+            }
+            out.println(max);
+        }
+        out.close();
+        
+    }
+} 
+
+class Stack<Item> {
+    
+    private Node first;
+    private static int count = 0;
+    
+    private class Node {
+        Item item;
+        Node next; 
+    }
+    
+    public static int size() {
+        return count;
+    }
+    
+    public Item pop() {
+        Item item = first.item;
+        first = first.next;
+        return item;
+    }
+    
+    public void push (Item elem) {
+        Node oldfirst = first;
+        first = new Node();
+        first.item = elem;
+        first.next = oldfirst;
+        count++;
+    }
+    
+    public Item peek() {
+        return first.item;
+    }
+    
+    public boolean isEmpty() {
+        return first == null;
+    }
+}

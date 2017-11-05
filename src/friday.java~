@@ -1,0 +1,47 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: friday
+*/
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+
+class gift1 {
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("friday.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("friday.out")));
+        ArrayList <Integer> friday_counts = new ArrayList <Integer>();
+        ArrayList <Integer> month_days = new ArrayList <Integer>();
+        int day = 0;
+        month_days.add(31);
+        month_days.add(28);
+        month_days.add(31);
+        month_days.add(30);
+        month_days.add(31);
+        month_days.add(30);
+        month_days.add(31);
+        month_days.add(31);
+        month_days.add(30);
+        month_days.add(31);
+        month_days.add(30);
+        month_days.add(31);
+        friday_counts.add(0);
+        friday_counts.add(0);
+        friday_counts.add(0);
+        friday_counts.add(0);
+        friday_counts.add(0);
+        friday_counts.add(0);
+        friday_counts.add(0);
+        for (int i = 0; i < 12; i++) {
+            for (int j = 1; j <= month_days.get(i); j++) {
+                day++;
+                if (j == 13) {
+                    friday_counts.set(day % 7, friday_counts.get(day % 7) + 1);
+                }
+            }
+        }
+        System.out.println(friday_counts.get(6));
+        out.close();
+    }
+}

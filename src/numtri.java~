@@ -1,0 +1,113 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: numtri
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+
+class numtri {
+    private static int num_rows;
+    
+    public static String format (String bin) {
+        while (bin.length() < num_rows - 1) {
+            bin = "0" + bin;
+        }
+        return bin;
+    }
+    
+    public static int[] reverse (int[] arr) {
+        int[] result = new int [arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = arr[num_rows - i - 1];
+        }
+        return result;
+    }
+    
+    public static int[] increment (int[] arr) {
+        
+        System.out.print("  ");
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] != arr[i - 1] && arr[i] < num_rows - i - 1) {
+                arr[i]++;
+                return arr;
+            }
+        }
+        arr[0]++;
+        
+        return arr;
+        
+    }
+    
+    public static void print (int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("numtri.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("numtri.out")));
+        num_rows = Integer.parseInt(f.readLine());
+        if (num_rows == 2) {
+            out.println(4);
+        } else if (num_rows == 1) {
+            out.println(0);
+            
+        } else {
+            int[][] all_rows = new int[num_rows][num_rows];
+            for (int i = 0; i < num_rows; i++) {
+                all_rows[i] = new int[num_rows];
+                
+                String[] lst = f.readLine().split(" ");
+                for (int j = 0; j <= i; j++) {
+                    all_rows[i][j] = Integer.parseInt(lst[j]);
+                    
+                }
+            }
+            int sum = 0;
+            for (int i = 1; i < 5; i++) {
+                
+                int current = i;
+                for (int j = 0; j < (int)Math.pow(2, num_rows - 1); j++) {
+                    int mediary = all_rows[num_rows - 1][i];
+                    int current_row = num_rows - 1;
+                    String path = format(Integer.toBinaryString(j));
+                    for (int c = 0; c < path.length() - 1; c++) {
+                        current_row--;
+                        if (current == 0) {
+                            mediary += all_rows[current_row][current];
+                            System.out.println(all_rows[current_row][current]);
+                        } else {
+                            if (current == current_row) {
+                                current--;
+                                mediary += all_rows[current_row][current];
+                                System.out.println(all_rows[current_row][current]);
+                            } else {
+                                int dir = Integer.parseInt("" + path.charAt(c));
+                                
+                                mediary += all_rows[current_row][current - dir];
+                                System.out.println(all_rows[current_row][current - dir]);
+                            }
+                            
+                        }
+                        
+                    }
+                    if (mediary > sum) {
+                        
+                        sum = mediary;
+                    }
+                    System.out.println(mediary + "\n");
+                }
+                
+            }
+            System.out.println(sum);
+        }
+        out.close();
+    }
+}

@@ -1,0 +1,44 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: namenum
+*/
+import java.io.*;z
+import java.util.*;
+import java.util.ArrayList;
+import java.lang.Math;
+
+class namenum {
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("namenum.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("namenum.out")));
+        BufferedReader g = new BufferedReader(new FileReader("dict.txt"));
+        HashMap<Integer, String[]> names = new HashMap<Integer, String[]>();
+        ArrayList <String> dict = new ArrayList <String>();
+        ArrayList <String> words = new ArrayList <String>();
+        boolean return_none = true;
+        String name = f.readLine();
+        String [] two = {"A", "B", "C"};
+        String [] three = {"D", "E", "F"};
+        String [] four = {"G", "H", "I"};
+        String [] five = {"J", "K", "L"};
+        String [] six = {"M", "N", "O"};
+        String [] seven = {"P", "R", "S"};
+        String [] eight = {"T", "U", "V"};
+        String [] nine = {"W", "X", "Y"};
+        names.put(2, two);
+        names.put(3, three);
+        names.put(4, four);
+        names.put(5, five);
+        names.put(6, six);
+        names.put(7, seven);
+        names.put(8, eight);
+        names.put(9, nine);
+        
+        for (int i = 0; i < 27; i++) {
+            
+        }
+
+        out.close();
+    }
+}

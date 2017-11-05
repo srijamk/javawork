@@ -1,0 +1,6 @@
+import java.io.*;
+import java.util.*;
+
+class Power {
+    public static int power ()
+}

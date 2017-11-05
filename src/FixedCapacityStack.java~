@@ -1,0 +1,131 @@
+import java.io.*;
+import java.util.*;
+import edu.princeton.cs.algs4.*;
+import java.lang.Math;
+
+class FixedCapacityStack<Item> {
+    private Item[] arr;
+    private int count = 0;
+    public FixedCapacityStack (int cap) {
+        // Java does not allow creation of new generic array as new Item[cap].  So we are casting from Object[cap]
+        arr = (Item[]) new Object[cap];
+    }
+    public void push (Item item) {
+        arr[count++] = item;
+    }
+    public Item pop() {
+        Item item = peek();
+        arr[--count] = null;
+        return item;
+    }
+    public Item peek() {
+        return arr[count - 1];
+    }
+    public boolean isEmpty() {
+        return count == 0;
+    }
+    public int size() {
+        return count;
+    }
+    public static void main (String [] args) {
+        //Test();
+        
+        //reverse("Hello World");
+        //System.out.println();
+        //reverse("23958375");
+        StdOut.println(isBalanced("(()()()))"));
+        //StdOut.println(isBalanced("(()"));
+        //StdOut.println(toHexorBinary(16, 15));
+        StdOut.println(evaluate("(1 + ((2 * 3) * (4 * 5)))"));
+    }
+    public static int evaluate (String s) {
+        FixedCapacityStack<Integer> operands = new FixedCapacityStack<Integer>(100);
+        FixedCapacityStack<Character> operators = new FixedCapacityStack<Character>(100);
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/') {
+                operators.push(c);
+            } else if (c == '(' || c == ' ') {
+
+            } else if (c == ')') {
+                char operator = operators.pop();
+                int right = operands.pop();
+                int left = operands.pop();
+                int val = 0;
+                if (operator == '+') {
+                    val = left + right;
+                } else if (operator == '-') {
+                    val = left - right;
+                } else if (operator == '*') {
+                    val = left * right;
+                } else if (operator == '/') {
+                    val = left / right;
+                }
+                operands.push(val);
+            } else {
+                operands.push(Integer.parseInt("" + c));
+            }
+        }
+        return operands.pop();
+    }
+    
+    public static boolean isBalanced (String s) {
+        FixedCapacityStack<String> stack = new FixedCapacityStack<String>(100);
+        char[] open = {'(', '[', '{'};
+        char[] closed = {')', ']', '}'};
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '[') {
+                stack.push("" + s.charAt(i));
+            } else if (!stack.isEmpty()){
+                for (int j = 0; j < 3; j++) {
+                    if (stack.peek().equals("" + open[j]) && closed[j] == s.charAt(i)) {
+                        stack.pop();
+                        break;
+                    }
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static String toHexorBinary (int base, int s) {
+        char [] digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        String result = "";       
+        FixedCapacityStack<String> stack = new FixedCapacityStack<String>(100);
+        while (s > 0) {
+            stack.push("" + digits[s % base]);
+            s /= base;
+        }            
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+        return result;
+    }
+
+    public static void Test() {
+        FixedCapacityStack<String> stack = new FixedCapacityStack<String>(100);
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            if (!item.equals("-")) {
+                stack.push(item);
+            }
+            else if (!stack.isEmpty()) {
+                StdOut.print(stack.pop() + " ");
+            }            
+        }
+        StdOut.println(stack.size() + " items left");   
+    }
+    
+    public static void reverse(String s) {
+        char [] arr = s.toCharArray();
+        FixedCapacityStack<Character> stack = new FixedCapacityStack<Character>(100);
+        for (int i = 0; i < arr.length; i++) {
+            stack.push(arr[i]);
+        }
+        while (!stack.isEmpty()) {
+            StdOut.print(stack.pop());
+        }
+    }
+    
+    
+}

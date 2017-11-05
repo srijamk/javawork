@@ -1,0 +1,23 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: combo
+*/
+import java.io.*;
+import java.util.*;
+
+class combo {
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("combo.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("combo.out")));
+        int max = Integer.parseInt(f.readLine());
+        for (int first = 1; first <= max; first++) {
+            for (int second = 1; second <= max; second++) {
+                for (int third = 1; third <= max; third++) {
+                    if ()
+                }
+            }
+        }
+        out.close();
+    }
+}

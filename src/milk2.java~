@@ -1,0 +1,60 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: milk2
+*/
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+class milk2 {
+    public static boolean overlap (int[] first, int[] second, int index, int next_index) {
+        if (first[index] < first[next_index] && (second[next_index] > second[index] && second[index] >= first[next_index]) || (second[index] > second[next_index])) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean is_inside (int[] first, int [] second, int index, int next_index) {
+        return first[index] <= first[next_index] && second[index] >= second[next_index];
+    }
+
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("milk2.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("milk2.out")));
+        int farmers = Integer.parseInt(f.readLine());
+        int [] first_ranges = new int [farmers];
+        int [] second_ranges = new int [farmers];
+        int longest_milking = 0;
+        int longest_idle = 0;
+        for (int i = 0; i < farmers; i++) {
+            String [] line = f.readLine().split(" ");
+            first_ranges[i] = Integer.parseInt(line[0]);
+            second_ranges[i] = Integer.parseInt(line[1]);        
+        }
+        if (first_ranges.length == 1) {
+            out.println((second_ranges[0] - first_ranges[0]) + " " + 0);
+        } else {
+            if (overlap(first_ranges, second_ranges, farmers - 1, 0)) {
+                if (longest_milking < second_ranges[farmers - 1] - first_ranges[farmers - 1]) {
+                    longest_milking = second_ranges[farmers - 1] - first_ranges[farmers - 1];
+                }
+            }
+            for (int i = 0; i < farmers - 1; i++) {
+                int long_milking = 0;
+                System.out.println(first_ranges[i] + " - " + second_ranges[i]);
+                if (overlap(first_ranges, second_ranges, i, i + 1)) {
+                    System.out.println("hi");
+                }
+            }
+
+            System.out.println(longest_milking + " " + longest_idle);
+        }
+        
+        
+        
+        
+        
+        
+        out.close();
+    }
+}

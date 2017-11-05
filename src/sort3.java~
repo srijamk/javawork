@@ -1,0 +1,112 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: sort3
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+
+class sort3 {
+    private static int one, two, three; 
+    
+    public static boolean is_sorted (int [] lst) {
+        for (int i = 1; i < lst.length; i++) {
+            if (lst[i] < lst[i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static void swap (int [] lst, int a, int b) {
+        int temp = lst[a];
+        lst[a] = lst[b];
+        lst[b] = temp;
+    }
+    
+    public static void print (int [] lst) {
+        for (int i = 0; i < lst.length; i++) {
+            System.out.print(lst[i] + " ");
+            
+        }
+        System.out.println();
+    }
+    
+    public static int first_one_instance (int [] lst) {
+        for (int i = 0; i < lst.length; i++) {
+            if (lst[i] == 1) {
+                return i;
+            }
+        }
+        return 0;
+    }
+    
+    public static int first_two_instance (int [] lst) {
+        for (int i = 0; i <= two; i++) {
+            if (lst[i] == 2) {
+                return i;
+            }
+        }
+        return one;
+    }
+    public static int magic (int [] lst) {
+        print(lst);
+        if (is_sorted(lst)) {
+            return 0;
+        }
+        
+        ArrayList <Integer> ones = count(lst, 1);
+        ArrayList <Integer> twos = count(lst, 2);
+        for (int i = 0; i < ones.size(); i++) {
+            if (ones.get(i) != i) {
+                if (first_one_instance(lst) != 0) {
+                    swap(lst, 0, ones.get(i));
+                    return 1 + magic(lst);
+                } else {
+                    swap(lst, first_one_instance(lst) + 1, ones.get(i));
+                    return 1 + magic(lst);
+                }
+            }
+        }
+        for (int i = 0; i < twos.size(); i++) {
+            if (twos.get(i) != one + i) {
+                System.out.println();
+                swap(lst, first_two_instance(lst) + 1, twos.get(i));
+                return 1 + magic(lst);
+            }
+        }
+        return 0;
+    }
+    
+    
+    public static ArrayList <Integer> count (int [] lst, int num) {
+        
+        ArrayList <Integer> result = new ArrayList <Integer>();
+        for (int i = 0; i < lst.length; i++) {
+            if (lst[i] == num) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("sort3.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("sort3.out")));
+        int num = Integer.parseInt(f.readLine());
+        int [] lst = new int [num];
+        for (int i = 0; i < num; i++) {
+            lst[i] = Integer.parseInt(f.readLine());
+        }
+        one = count(lst, 1).size();
+        two = count(lst, 2).size();
+        
+        out.println(magic(lst));
+        out.close();
+    }
+}

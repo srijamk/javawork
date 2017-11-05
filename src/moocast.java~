@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+import java.lang.Math;
+
+class moocast {
+    public static String [] find_distance (int [] x, int [] y, int cow_x, int cow_y) {
+        double result = Integer.MAX_VALUE;
+        String [] real = new String [2];
+        int index = 0;
+        for (int i = 0; i < x.length; i++) {
+            if (Math.sqrt((cow_x - x[i]) * (cow_x - x[i]) + (cow_y - y[i]) * (cow_y - y[i])) < result) {
+                result = Math.sqrt((cow_x - x[i]) * (cow_x - x[i]) + (cow_y - y[i]) * (cow_y - y[i]));
+                index = i;
+            }
+        }
+        real[0] = "" + result;
+        real[1] = "" + index;
+        return real;
+    }
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("moocast.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("moocast.out")));
+        int N = Integer.parseInt(f.readLine());
+        int [] x = new int [N];
+        int [] y = new int [N];
+        int [] power = new int [N];
+        for (int i = 0; i < N; i++) {
+            String [] line = f.readLine().split(" ");
+            x[i] = Integer.parseInt(line[0]);
+            y[i] = Integer.parseInt(line[1]);  
+            power[i] = Integer.parseInt(line[2]);
+        }
+        int num = 0;
+        for (int j = 0; j < N; j++) {
+            int cow = 0;
+            int in = 0;
+            while (true){
+                if (power[cow] >= Double.parseDouble(find_distance(x, y, x[cow], y[cow])[0])) {
+                    cow = Integer.parseInt(find_distance(x, y, x[cow], y[cow])[1]);
+                    in++;
+                } else {
+                    break;
+                }
+                System.out.println(cow);
+            }
+            if (in > num) {
+                num = in;
+            }
+        }
+        System.out.println(num);
+        out.close();
+    }
+}

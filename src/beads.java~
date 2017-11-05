@@ -1,0 +1,45 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: beads
+*/
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+
+class gift1 {
+    public static int count_beads (String s) {
+        int count = 0;
+        char color = s.charAt(0);
+        int i = 0;
+        while ((i < s.length()) && (s.charAt(i) == 'w' || s.charAt(i) == color)) {
+            count++;
+            i++;
+        }
+        return count;
+    }
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("beads.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("beads.out")));
+        int number_of_beads = Integer.parseInt(f.readLine());
+        String beads = f.readLine();
+        beads += beads;
+        String first_part = "";
+        String second_part = "";
+        int first_index = 0;
+        int highest_count = 0;
+        int return_index = -1;
+        for (int second_index = 1; second_index < number_of_beads; second_index++) {
+            beads = beads.substring(0, second_index) + beads.substring(second_index) + beads.substring(0, second_index);
+            first_part = "" + beads.substring(first_index, second_index);
+            second_part = beads.substring(second_index);
+            if ((count_beads(first_part) + count_beads(second_part)) > highest_count) {
+                highest_count = (count_beads(first_part) + count_beads(second_part));
+                return_index = second_index;
+            }
+            System.out.println(beads);
+        }
+        System.out.println(highest_count);
+        out.close();
+    }
+}

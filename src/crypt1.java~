@@ -1,0 +1,8 @@
+import java.io*;
+import java.util.*;
+
+class crypt1 {
+    public static void main (String [] args) throws IOException {
+        BufferedReader = new BufferedReader(new FileReader("crypt1.in"));
+    }
+}

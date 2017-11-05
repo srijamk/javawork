@@ -1,0 +1,20 @@
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+import java.util.Collections;
+
+class cowcode {
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("cowcode.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("cowcode.out")));  
+        String [] list = f.readLine().split(" ");
+        String word = list[0];
+        int n = Integer.parseInt(list[1]);
+        while (word.length() < n) {
+            word = word + word.charAt(word.length() - 1) + word.substring(0, word.length() - 1);
+        }
+        out.println(word.charAt(n - 1));
+        out.close();
+    }
+}

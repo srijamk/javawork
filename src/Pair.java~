@@ -1,0 +1,20 @@
+public class Pair {
+    public int x, y;
+    public Pair(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public List<Pair> getAllPairs(List<Integer> numbers) {
+    List<Pair> pairs = new ArrayList<Pair>();
+    int total = numbers.size();
+    for(int i=0; i < total; i++) {
+        int num1 = numbers.get(i).intValue();
+        for(int j=i+1; j < total; j++) {
+            int num2 = numbers.get(j).intValue();
+            pairs.add(new Pair(num1,num2));
+        }
+    }
+    return pairs;
+}

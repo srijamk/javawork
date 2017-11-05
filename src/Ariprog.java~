@@ -1,0 +1,86 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: ariprog
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+
+class ariprog {
+    public static int num = 1;
+    public static int inc = 1;
+    public static int upper;
+    public static int seq;
+    public static String hi = "";
+    
+    public static boolean is_bisquare (int n, int bound) {
+        for (int i = 0; i <= bound; i++) {
+            for (int j = 0; j <= bound; j++) {
+                if (i*i + j*j == n) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static String thing (int count, int seq_length, int start, String result, int increment, int bound) {
+        //System.out.println(start);
+        if (start > upper) {
+            return "";
+        }
+        if (start < upper && seq_length == 1) {
+            //System.out.println(start);
+            hi = "no";
+            return (start - count * increment + " " + increment) + "\n" + thing(0, seq, start - count * increment + 1, "", inc, bound);
+        }
+        
+        if (start == 0 || (is_bisquare(start, bound) && is_bisquare(start + increment, bound))) {
+            //System.out.println(start);
+            return thing(count+1, seq_length - 1, start + increment, result + ("" + (start + increment)), inc, bound);
+            
+        } else {
+            //System.out.println(start);
+            return thing(0, seq, start - count * increment + 1, "", inc, bound);
+        }
+        
+    }
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("ariprog.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ariprog.out")));
+        seq = Integer.parseInt(f.readLine());
+        int bound = Integer.parseInt(f.readLine());
+        ArrayList <Integer> bisquares = new ArrayList <Integer>();
+        for (int i = 0; i <= bound; i++) {
+            for (int j = 0; j <= bound; j++) {
+                if (!bisquares.contains(i*i + j*j)) {
+                    bisquares.add(i*i + j*j);
+                }
+            }
+        }
+        Collections.sort(bisquares);
+        boolean none = true;
+        for (int i = 1; i < 1000; i++) {
+            for (int bi: bisquares) {
+                boolean all_right = true;
+                for (int j = bi; j < bi + seq * i; j += i) {
+                    if (!bisquares.contains(j)) {
+                        all_right = false;
+                        break;
+                    }
+                }
+                if (all_right) {
+                    none = false;
+                    out.println(bi + " " + i);
+                }
+            }        
+        }
+        if (none) {
+            out.println("NONE");
+        }
+        out.close();
+        
+    }
+}

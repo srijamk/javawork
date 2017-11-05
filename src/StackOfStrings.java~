@@ -1,0 +1,11 @@
+import java.io.*;
+import java.util.*;
+
+class StackOfStrings {
+    public static void push (String s) {
+        
+    }
+    public static String pop (String s) {
+        
+    }
+}

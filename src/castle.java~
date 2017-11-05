@@ -1,0 +1,201 @@
+/*
+ ID: srijamk1
+ LANG: JAVA
+ PROG: castle
+ */
+
+import java.io.*;
+import java.util.*;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.ArrayList;
+
+class castle {
+    private static ArrayList <ArrayList<int[]>> result = new ArrayList <ArrayList<int[]>>();
+    
+    public static int get_room (int current_x, int current_y) {
+        for (int i = 0; i < result.size(); i++) {
+            for (int[] j: result.get(i)) {
+                if (j[0] == current_x && j[1] == current_y) {
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public static void magic (int num_cols, int num_rows, int[][] floorplan) {
+        ArrayList <int[]> first_room = new ArrayList <int[]>();
+        
+        int[] start = {0, 0};
+        first_room.add(start);
+        result.add(first_room);
+        int cur_x = 0;
+        while (cur_x < num_cols) {
+            for (int cur_y = 0; cur_y < num_rows; cur_y++) {
+                int[] test = {cur_x, cur_y};
+                int x = floorplan[cur_x][cur_y];
+                if (x == 1 || x == 2 || x == 3 || x == 8 || x == 9 || x == 10 || x == 11) {
+                    int[] sec_test = {cur_x, cur_y + 1};
+                    if (!contains(cur_x, cur_y)) {
+                        ArrayList <int[]> new_room = new ArrayList <int[]>();
+                        
+                        new_room.add(test);
+                        new_room.add(sec_test);
+                        result.add(new_room);                        
+                    } else {
+                        result.get(get_room(cur_x, cur_y)).add(sec_test);
+                    }
+                    
+                    
+                } else {
+                    if (!contains(cur_x, cur_y)) {
+                        
+                        ArrayList <int[]> new_room = new ArrayList <int[]>();
+                        new_room.add(test);
+                        result.add(new_room);
+                    }
+                }
+            }
+            cur_x++;
+        }
+        
+        cur_x = 1;
+        while (cur_x < num_cols) {
+            for (int cur_y = 0; cur_y < num_rows; cur_y++) {
+                int[] test = {cur_x, cur_y};
+                int x = floorplan[cur_x][cur_y];
+                if (x == 1 || x == 4 || x == 5 || x == 8 || x == 9 || x == 12 || x == 13) {
+                    int[] sec = {cur_x - 1, cur_y};
+                    merge(get_room(test[0], test[1]), get_room(sec[0], sec[1]));
+                }
+            }
+            cur_x++;
+        }
+    }
+    
+    public static void merge (int first, int second) {
+        if (first != second) {
+            for (int i = 0; i < result.get(second).size(); i++) {
+                result.get(first).add(result.get(second).get(i));
+                
+            }
+            result.remove(second);
+        }
+        
+    }
+    
+    public static boolean contains (int current_x, int current_y) {
+        for (int i = 0; i < result.size(); i++) {
+            for (int[] j: result.get(i)) {
+                if (j[0] == current_x && j[1] == current_y) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static void print_result () {
+        for (ArrayList<int[]> room: result) {
+            for (int[] coords: room) {
+                print(coords);
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void print (int[] lst) {
+        for (int i = 0; i < lst.length; i++) {
+            System.out.print(lst[i] + ",");
+        }
+        System.out.print("  ");
+    }
+    
+    public static int largest_room () {
+        int largest = 0;
+        for (ArrayList<int[]> room: result) {
+            if (room.size() > largest) {
+                largest = room.size();
+            }
+        }
+        return largest;
+    }
+    
+    public static boolean cons (int num, int[] lst) {
+        for (int i = 0; i < result.get(num).size(); i++) {
+            if (Arrays.equals(result.get(num).get(i), lst)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static int[] has_connection (int first, int second) {
+
+        int[] west_most = {Integer.MAX_VALUE, Integer.MAX_VALUE};
+        for (int[] section: result.get(first)) {
+            int[] north = {section.clone()[0] - 1, section.clone()[1]};
+            int[] east = {section.clone()[0], section.clone()[1] + 1};
+            int[] south = {section.clone()[0] + 1, section.clone()[1]};
+            int[] west = {section.clone()[0], section.clone()[1] - 1};
+            if (cons(second, east) && east[0] < west_most[0] && east[1] < west_most[1]) {
+                west_most[0] = east[0];
+                west_most[1] = east[1];
+            }
+        }
+
+        for (int[] section: result.get(second)) {
+            int[] north = {section.clone()[0] - 1, section.clone()[1]};
+            int[] east = {section.clone()[0], section.clone()[1] + 1};
+            int[] south = {section.clone()[0] + 1, section.clone()[1]};
+            int[] west = {section.clone()[0], section.clone()[1] - 1};
+            if (cons(first, west) && west[0] >= west_most[0] && west[1] <= west_most[1]) {
+                west_most[0] = west[0];
+                west_most[1] = west[1];
+            }
+        }
+        return west_most;
+    }
+    
+    
+    
+    public static void main (String [] args) throws IOException {
+        Scanner scan = new Scanner(new File("castle.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("castle.out")));
+        int num_rows = scan.nextInt();
+        int num_cols = scan.nextInt();
+        int[][] floorplan = new int[num_rows][num_cols];
+        for (int row = 0; row < num_cols; row++) {
+            int[] r = new int[num_rows];
+            for (int i = 0; i < num_rows; i++) {
+                r[i] = scan.nextInt();
+                
+            } 
+            floorplan[row] = r;
+        }
+        magic(num_cols, num_rows, floorplan);
+        System.out.println(result.size());
+        System.out.println(largest_room());
+        //print_result();
+        int[] south_most = {0, Integer.MAX_VALUE};
+        for (int first = 0; first < result.size(); first++) {
+            for (int sec = 0; sec < result.size(); sec++) {
+                int[] west_most = has_connection(first, sec);
+                if (west_most[0] >= south_most[0] && west_most[1] <= south_most[1]) {
+                    south_most[0] = west_most[0];
+                    south_most[1] = west_most[1];
+                }
+                
+            }
+        }
+        if (get_room(south_most[0], south_most[1]) != get_room(south_most[0] - 1, south_most[1])) {
+            System.out.println(result.get(get_room(south_most[0], south_most[1])).size() + result.get(get_room(south_most[0] - 1, south_most[1])).size());
+            System.out.println(south_most[0] + 1 + " " + (south_most[1] + 1) + " N");
+        } else {
+            System.out.println(south_most[0] + 1 + " " + (south_most[1] + 1) + " E");
+        }
+        out.close();
+    }
+}

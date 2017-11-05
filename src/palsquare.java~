@@ -1,0 +1,70 @@
+/*
+ID: srijamk1
+LANG: JAVA
+PROG: palsquare
+*/
+import java.io.*;
+import java.util.*;
+import java.util.ArrayList;
+import java.lang.Math;
+
+class palsquare {
+    public static String[] combo (double num_chars) {
+        String[] list = new String[81];
+        HashMap<Integer, String[]> names = new HashMap<Integer, String[]>();
+        String [] two = {"A", "B", "C"};
+        String [] three = {"D", "E", "F"};
+        String [] four = {"G", "H", "I"};
+        String [] five = {"J", "K", "L"};
+        String [] six = {"M", "N", "O"};
+        String [] seven = {"P", "R", "S"};
+        String [] eight = {"T", "U", "V"};
+        String [] nine = {"W", "X", "Y"};
+        names.put(2, two);
+        names.put(3, three);
+        names.put(4, four);
+        names.put(5, five);
+        names.put(6, six);
+        names.put(7, seven);
+        names.put(8, eight);
+        names.put(9, nine);
+        for (int i = 0; i < num_chars; i++) {
+            list.add()
+        }
+        return list;
+    }
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("namenum.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("namenum.out")));
+        BufferedReader g = new BufferedReader(new FileReader("dict.txt"));
+        HashMap<Integer, String[]> names = new HashMap<Integer, String[]>();
+        ArrayList <String> dict = new ArrayList <String>();
+        ArrayList <String> words = new ArrayList <String>();
+        boolean return_none = true;
+        String name = f.readLine();
+        String [] two = {"A", "B", "C"};
+        String [] three = {"D", "E", "F"};
+        String [] four = {"G", "H", "I"};
+        String [] five = {"J", "K", "L"};
+        String [] six = {"M", "N", "O"};
+        String [] seven = {"P", "R", "S"};
+        String [] eight = {"T", "U", "V"};
+        String [] nine = {"W", "X", "Y"};
+        names.put(2, two);
+        names.put(3, three);
+        names.put(4, four);
+        names.put(5, five);
+        names.put(6, six);
+        names.put(7, seven);
+        names.put(8, eight);
+        names.put(9, nine);
+        for (int des_letter = 0; des_letter < 3; des_letter++) {
+            for (int name_letter = 0; name_letter < 4; name_letter++) {
+                System.out.print(names.get(Integer.parseInt("" + name.charAt(name_letter)))[des_letter] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println(combo(name.length()));
+        out.close();
+    }
+}

@@ -1,0 +1,14 @@
+import java.io.*;
+import java.util.*;
+
+public class aplusb {
+ public static void main(String[] args) throws IOException {
+        try (BufferedReader in = new BufferedReader(new FileReader("input.txt"));
+             PrintWriter out = new PrintWriter("output.txt")) {
+            StringTokenizer tok = new StringTokenizer(in.readLine());
+            int a = Integer.parseInt(tok.nextToken());
+            int b = Integer.parseInt(tok.nextToken());
+            out.println(a + b);
+        }
+    }
+}

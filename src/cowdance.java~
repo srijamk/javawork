@@ -1,0 +1,17 @@
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+import java.util.Collections;
+
+class cowdance {
+    
+    public static void main (String [] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("cowdance.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("cowdance.out")));  
+        String [] list = f.readLine().split(" ");
+        int num_cows = Integer.parseInt(list[0]);
+        int T = Integer.parseInt(list[1]);
+        out.println();
+        out.close();
+    }
+}
